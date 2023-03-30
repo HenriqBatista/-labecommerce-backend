@@ -11,15 +11,15 @@
     "typescript": "^5.0.2"
   },
   "scripts": {
-    "start": "tsc && node ./build/index.js",
-    "dev": "ts-node-dev src/index.ts"
+    "start": "tsc && node ./build/endpoints/index.js",
+    "dev": "ts-node-dev src/app.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HenriqBatista/labecommerce-backend.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Henrique-Batista",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/HenriqBatista/labecommerce-backend/issues"
