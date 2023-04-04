@@ -14,11 +14,27 @@ export const createUser = (req: Request, res: Response) => {
       throw new Error ("Id invalido. Id deve ser do tipo String")
     }
   
-    if(typeof email !== "string"){
-      res.status(400)
-      throw new Error("Email invalido. Email deve ser do tipo String");
+    // if(typeof email !== "string"){
+    //   res.status(400)
+    //   throw new Error("Email invalido. Email deve ser do tipo String");
       
+    // }
+
+    if (email !== undefined) {
+      if (!email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+?$/i)) {
+        res.status(400);
+        throw new Error("email tem que o padrão exemplo@gmail.com");
+      }
+      if (typeof email !== "string") {
+        res.status(400);
+        throw new Error("email tem que ser tipo string");
+      }
+      if (!email.length) {
+        res.status(400);
+        throw new Error("email precisa ter no mínimo 1 valor");
+      }
     }
+
     if(typeof password !== "string"){
       res.status(400)
       throw new Error("Password invalido. Password deve ser do tipo String");
