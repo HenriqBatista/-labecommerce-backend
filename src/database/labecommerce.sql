@@ -89,4 +89,51 @@ LIMIT 20;
 -- getAllProductsBetweenTwoPrices
 SELECT * FROM products
 WHERE price >= 500 AND price <= 1000
-ORDER BY price ASC
+ORDER BY price ASC;
+
+
+--- relacoes sql-I
+CREATE TABLE purchases(
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    total_price REAL NOT NULL,
+    paid INTEGER NOT NULL DEFAULT 0,
+    delivered_at TEXT,
+    buyer_id TEXT NOT NULL,
+    FOREIGN KEY (buyer_id) REFERENCES users (id)
+);
+
+INSERT INTO purchases (id, total_price,buyer_id)
+VALUES ("pu001",189.99,"01"),
+("pu002",849.99,"01"),
+("pu003",1899.99,"02");
+
+
+SELECT * FROM purchases;
+
+UPDATE purchases
+SET paid = 1
+WHERE id = "pu001";
+
+UPDATE purchases
+SET delivered_at = DATETIME("now", "localtime")
+WHERE id = "pu001";
+
+SELECT
+users.id AS userId,
+users.email,
+purchases.id AS purchaseId,
+purchases.total_price AS totalPrice,
+purchases.delivered_at AS delivered,
+purchases.buyer_id AS buyerId
+FROM users
+INNER JOIN purchases
+ON users.id = purchases.buyer_id;
+
+
+
+
+-- ("01", "Mouse Gamer", 189.99, "Eletronicos"),
+-- ("02", "Monitor 32'", 849.99, "Eletronicos"),
+-- ("03", "Mesa para escritorio", 349.89, "Moveis"),
+-- ("04", "Cadeira Gamer", 574.99, "Acessorios"),
+-- ("05", "Celular Samsung", 1899.99, "Eletronicos");
