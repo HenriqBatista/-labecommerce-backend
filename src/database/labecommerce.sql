@@ -131,9 +131,39 @@ ON users.id = purchases.buyer_id;
 
 
 
+-- Relações SQL II -- relação da tabela de products e purchases
 
--- ("01", "Mouse Gamer", 189.99, "Eletronicos"),
--- ("02", "Monitor 32'", 849.99, "Eletronicos"),
--- ("03", "Mesa para escritorio", 349.89, "Moveis"),
--- ("04", "Cadeira Gamer", 574.99, "Acessorios"),
--- ("05", "Celular Samsung", 1899.99, "Eletronicos");
+CREATE TABLE purchases_products(
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+DROP TABLE purchases_products;
+
+INSERT INTO purchases_products
+VALUES
+        ("pu001","01",2),
+        ("pu002","03",4),
+        ("pu003","04",3);
+
+SELECT  
+        users.id,
+        users.email,
+        purchases.id AS purchaseId,
+        purchases.paid,
+        products.id as productId,
+        products.name AS productName,
+        products.category AS productCategory,
+        products.price AS price,
+        purchases_products.quantity,
+        purchases.total_price
+FROM purchases
+LEFT JOIN purchases_products
+ON purchases_products.product_id = purchases.id
+LEFT JOIN products
+ON purchases_products.product_id = products.id
+LEFT JOIN users
+ON purchases.buyer_id = users.id;
