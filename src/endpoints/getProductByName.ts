@@ -1,8 +1,9 @@
 import { Request,Response } from "express";
 import { product } from "../database";
+import { db } from "../database/knex";
 
 
-export const getProductByName = (req: Request, res: Response) => {
+export const getProductByName = async (req: Request, res: Response) => {
   
     try {
     const q = req.query.q as string;
@@ -10,15 +11,13 @@ export const getProductByName = (req: Request, res: Response) => {
       res.status(400)
       throw new Error("Erro. Digite um nome válido.")
     }
-    const result = product.filter((p) => {
-      return p.name.toLowerCase().includes(q.toLowerCase());
-    });
+    const result = await db.raw(`SELECT * FROM products WHERE name = "${q}";`)
   
     res.status(200).send(result);
   
     } catch (error) {
       console.log(error)
-      if(res.statusCode === 200){
+      if(req.statusCode === 200){
         res.status(500)
       }
       if(error instanceof Error){

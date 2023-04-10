@@ -5,34 +5,40 @@
 
 CREATE TABLE users(
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT (datetime('now', '-3 hours'))
 );
 
-INSERT INTO users
-VALUES("01", "henrique@gmail.com","henrique123"),
-("02", "larissa@gmail.com","larissa123"),
-("03", "erick@gmail.com","erick123");
+
+INSERT INTO users (id,name,email,password)
+VALUES("01","henrique", "henrique@gmail.com","henrique123"),
+("02","larissa", "larissa@gmail.com","larissa123"),
+("03","erick", "erick@gmail.com","erick123");
 
 SELECT * FROM users;
 
+DROP TABLE users;
 
 CREATE TABLE products (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     name TEXT NOT NULL,
     price REAL NOT NULL,
-    category TEXT NOT NULL
+    description TEXT NOT NULL,
+    imageUrl TEXT NOT NULL
 );
 
 INSERT INTO products
-VALUES ("01", "Mouse Gamer", 189.99, "Eletronicos"),
-("02", "Monitor 32'", 849.99, "Eletronicos"),
-("03", "Mesa para escritorio", 349.89, "Moveis"),
-("04", "Cadeira Gamer", 574.99, "Acessorios"),
-("05", "Celular Samsung", 1899.99, "Eletronicos");
+VALUES ("01", "Mouse Gamer", 189.99, "Eletronicos","https://m.media-amazon.com/images/I/51WDqMptUDL._AC_SY450_.jpg"),
+("02", "Monitor 32'", 849.99, "Eletronicos","https://m.media-amazon.com/images/I/71Bx4P3l2oL._AC_SY355_.jpg"),
+("03", "Mesa para escritorio", 349.89, "Moveis","https://m.media-amazon.com/images/I/61SwLdyBdFL._AC_SY355_.jpg"),
+("04", "Cadeira Gamer", 574.99, "Acessorios","https://m.media-amazon.com/images/I/51OfT2SdS+L._AC_SX425_.jpg"),
+("05", "Celular Samsung", 1899.99, "Eletronicos","https://m.media-amazon.com/images/I/612WbrQv0kL._AC_SX569_.jpg");
 
 SELECT * FROM products;
 
+DROP TABLE products;
 
 ---- aprofundamento sql
 -- exercicio 1
@@ -61,7 +67,7 @@ WHERE id = "04";
 
 -- deleteUserById
 DELETE FROM users
-WHERE id = "04";
+WHERE id = "01";
 
 -- deleteProductById
 DELETE FROM products
@@ -69,8 +75,8 @@ WHERE id = "06";
 
 -- editUserById
 UPDATE users
-SET password = "janela123"
-WHERE id = "03";
+SET id = NULL
+WHERE id = "01";
 
 -- editProductById
 UPDATE products
@@ -95,10 +101,11 @@ ORDER BY price ASC;
 --- relacoes sql-I
 CREATE TABLE purchases(
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    buyer_id TEXT NOT NULL,
     total_price REAL NOT NULL,
+    created_at TIMESTAMP DEFAULT (datetime('now', '-3 hours')),
     paid INTEGER NOT NULL DEFAULT 0,
     delivered_at TEXT,
-    buyer_id TEXT NOT NULL,
     FOREIGN KEY (buyer_id) REFERENCES users (id)
 );
 
@@ -108,7 +115,10 @@ VALUES ("pu001",189.99,"01"),
 ("pu003",1899.99,"02");
 
 
-SELECT * FROM purchases;
+DROP TABLE purchases;
+
+SELECT * FROM purchases
+WHERE buyer_id = "01";
 
 UPDATE purchases
 SET paid = 1
