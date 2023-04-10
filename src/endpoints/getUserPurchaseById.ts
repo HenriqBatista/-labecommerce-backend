@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import { purchase, users } from "../database";
+import { db } from "../database/knex";
 
-export const getUserPurchasesByUserId = (req: Request, res: Response) => {
+export const getUserPurchasesByUserId = async (req: Request, res: Response) => {
     try {
     const id = req.params.id as string
-    const result = purchase.find((p) => {
-    return p.userId === id;
-    });
+    const result = await db.raw(`SELECT * FROM purchases WHERE userId = "${id}";`)
   
     const existingUser = users.find((user)=> user.id === id)
     if(!existingUser) {

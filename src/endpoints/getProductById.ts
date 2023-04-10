@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
 import { product } from "../database";
+import { db } from "../database/knex";
 
 
-export const getProductById = (req: Request, res: Response) => {
+export const getProductById = async (req: Request, res: Response) => {
     try {
     const id = req.params.id;
-    const result = product.find((p) => {
-      return p.id === id;
-    });
+    const result = await db.raw(`SELECT * FROM products
+      WHERE id = "${id}";
+      `)
+
     if(!result){
       res.status(404)
       throw new Error("Produto não encontrado.")

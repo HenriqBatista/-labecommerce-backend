@@ -5,7 +5,7 @@ import { TPurchase } from "../types";
 
 
 
-export const createPurchase = (req: Request, res: Response) => {
+export const createPurchase = async (req: Request, res: Response) => {
     try {
     const userId = req.body.userId as string;
     const productId = req.body.productId as string;
@@ -65,3 +65,6 @@ export const createPurchase = (req: Request, res: Response) => {
       }
     }
   };
+
+
+  

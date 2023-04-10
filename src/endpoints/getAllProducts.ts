@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
-import { product } from "../database";
+// import { result } from "../database";
+import { db } from "../database/knex";
 
-export const getAllProducts = (req: Request, res: Response) => {
+export const getAllProducts = async (req: Request, res: Response) => {
     try {
-      if(!product){
+      const result = await db.raw(`SELECT * FROM products;`)
+      if(!result){
         res.status(404)
         throw new Error("Lista de produtos não encontrada.")
       }
-      res.status(200).send(product); 
+      res.status(200).send(result); 
   
     } catch (error) { 
-      if(res.statusCode === 200){
+      if(req.statusCode === 200){
         res.status(500)
       }
       res.send(error)
