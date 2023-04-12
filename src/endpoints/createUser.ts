@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { users } from "../database";
+// import { users } from "../database";
 import { TUser } from "../types";
 import { db } from "../database/knex";
 
@@ -37,19 +37,19 @@ export const createUser =  async (req: Request, res: Response) => {
       throw new Error("Password invalido. Password deve ser do tipo String");
     }
   
-    const unavailableId = users.find((user)=> user.id === id)
-    if(unavailableId){
-      res.status(400)
-      throw new Error("Id já casdastrado.")
-    }
+    // const unavailableId = users.find((user)=> user.id === id)
+    // if(unavailableId){
+    //   res.status(400)
+    //   throw new Error("Id já casdastrado.")
+    // }
   
-    const unavaliableEmail = users.find((user)=> user.email === email)
-    if(unavaliableEmail){
-      res.status(400)
-      throw new Error("Email já casdastrado.")
-    }
+    // const unavaliableEmail = users.find((user)=> user.email === email)
+    // if(unavaliableEmail){
+    //   res.status(400)
+    //   throw new Error("Email já casdastrado.")
+    // }
   
-    const newUser: TUser = {
+    const newUser = {
       id,
       name,
       email,

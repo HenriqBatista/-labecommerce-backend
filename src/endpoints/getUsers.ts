@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { users } from "../database";
 import { db } from "../database/knex";
 
 

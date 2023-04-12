@@ -1,7 +1,9 @@
 import { Request, Response} from "express";
-import { purchase } from "../database";
+import { db } from "../database/knex";
 
 
-export const getAllPurchase = (req: Request, res: Response)=>{
-    res.status(200).send(purchase)
+
+export const getAllPurchase = async (req: Request, res: Response)=>{
+    const purchases = await db("purchases")
+    res.status(200).send(purchases)
 }
