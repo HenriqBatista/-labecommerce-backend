@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
-import { product } from "../database"
-import { CATEGORY } from "../types"
+// import { product } from "../database"
+// import { CATEGORY } from "../types"
 
 
 
@@ -11,13 +11,13 @@ export const editProductById = (req: Request, res:Response)=>{
      const newId = req.body.id as string | undefined
      const newName = req.body.name as string | undefined
      const newPrice = req.body.price as number | undefined
-     const newCategory = req.body.category as CATEGORY | undefined
+     const newCategory = req.body.category as string | undefined
  
-     const productToEdit = product.find((p)=> p.id === id)
-     if(!productToEdit){
-       res.status(400)
-       throw new Error("Produto referente ao id informado não existe")
-     }
+    //  const productToEdit = product.find((p)=> p.id === id)
+    //  if(!productToEdit){
+    //    res.status(400)
+    //    throw new Error("Produto referente ao id informado não existe")
+    //  }
  
      if(newId !== undefined){
        if(typeof newId !== "string"){
@@ -52,21 +52,21 @@ export const editProductById = (req: Request, res:Response)=>{
        }
      }
  
-     if(newCategory !== undefined){
-       if(newCategory !== CATEGORY.ACCESSORIES &&
-         newCategory !== CATEGORY.CLOTHES_AND_SHOES &&
-         newCategory !== CATEGORY.ELECTRONICS
-         ){
-         res.status(400)
-         throw new Error("Category precisa ser de um tipos validos")
-       }
-     }
-     if(productToEdit){
-         productToEdit.id = newId || productToEdit.id
-         productToEdit.name = newName || productToEdit.name
-         productToEdit.price = newPrice || productToEdit.price
-         productToEdit.category = newCategory || productToEdit.category
-     }
+    //  if(newCategory !== undefined){
+    //    if(newCategory !== CATEGORY.ACCESSORIES &&
+    //      newCategory !== CATEGORY.CLOTHES_AND_SHOES &&
+    //      newCategory !== CATEGORY.ELECTRONICS
+    //      ){
+    //      res.status(400)
+    //      throw new Error("Category precisa ser de um tipos validos")
+    //    }
+    //  }
+    //  if(productToEdit){
+    //      productToEdit.id = newId || productToEdit.id
+    //      productToEdit.name = newName || productToEdit.name
+    //      productToEdit.price = newPrice || productToEdit.price
+    //      productToEdit.category = newCategory || productToEdit.category
+    //  }
  
      res.status(200).send("Produto atualizado com sucesso")
      

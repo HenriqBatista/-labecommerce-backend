@@ -1,5 +1,5 @@
 import { Request,Response } from "express";
-import { product } from "../database";
+
 import { db } from "../database/knex";
 
 

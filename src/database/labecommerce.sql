@@ -110,15 +110,20 @@ CREATE TABLE purchases(
 );
 
 INSERT INTO purchases (id, total_price,buyer_id)
-VALUES ("pu001",189.99,"01"),
-("pu002",849.99,"01"),
-("pu003",1899.99,"02");
+VALUES  ("pu001",189.99,"01"),
+        ("pu002",849.99,"01"),
+        ("pu003",1899.99,"02");
 
 
 DROP TABLE purchases;
 
 SELECT * FROM purchases
 WHERE buyer_id = "01";
+
+
+
+
+SELECT * FROM purchases;
 
 UPDATE purchases
 SET paid = 1
@@ -133,11 +138,16 @@ users.id AS userId,
 users.email,
 purchases.id AS purchaseId,
 purchases.total_price AS totalPrice,
+(CASE 
+    WHEN purchases.paid = 0 THEN "not paid"  
+    ELSE  "paid"
+END) as paid,
 purchases.delivered_at AS delivered,
 purchases.buyer_id AS buyerId
 FROM users
 INNER JOIN purchases
 ON users.id = purchases.buyer_id;
+
 
 
 
@@ -166,7 +176,7 @@ SELECT
         purchases.paid,
         products.id as productId,
         products.name AS productName,
-        products.category AS productCategory,
+        products.description AS productDescription,
         products.price AS price,
         purchases_products.quantity,
         purchases.total_price
@@ -177,3 +187,9 @@ LEFT JOIN products
 ON purchases_products.product_id = products.id
 LEFT JOIN users
 ON purchases.buyer_id = users.id;
+
+SELECT products.id FROM products;
+
+
+SELECT * FROM purchases;
+SELECT * FROM products;

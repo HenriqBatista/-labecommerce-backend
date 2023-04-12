@@ -7,6 +7,7 @@ import { getProductById } from "./endpoints/getProductById";
 import { getProductByName } from "./endpoints/getProductByName";
 import { getUsers } from "./endpoints/getUsers";
 import { getUserPurchasesByUserId } from "./endpoints/getUserPurchaseById";
+import { getPurchaseById } from "./endpoints/getPurchaseById";
 // import endpoints post
 import { createUser } from "./endpoints/createUser";
 import { createProduct } from "./endpoints/createProduct";
@@ -35,7 +36,8 @@ app.get("/products", getAllProducts)
 app.get("/purchases", getAllPurchase)
 app.get("/products/search", getProductByName)
 app.get("/products/:id", getProductById)
-app.get("/users/:id/purchase", getUserPurchasesByUserId)
+app.get("/users/:id/purchases", getUserPurchasesByUserId)
+app.get("/purchases/:id", getPurchaseById)
 
 // Endpoints metodo POST
 app.post("/users", createUser)

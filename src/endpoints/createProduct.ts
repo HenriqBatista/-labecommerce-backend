@@ -1,7 +1,6 @@
 import {Request, Response} from "express"
-import { product } from "../database";
-// import { CATEGORY, TProduct } from "../types";
 import { db } from "../database/knex";
+import { TProduct } from "../types";
 
 
 export const createProduct =  async (req: Request, res: Response) => {
@@ -24,25 +23,36 @@ export const createProduct =  async (req: Request, res: Response) => {
         res.status(400)
         throw new Error("O 'price' do produto precisa ser do tipo number")
       }
-      // if(
-      //   category !== CATEGORY.ACCESSORIES &&
-      //   category !== CATEGORY.CLOTHES_AND_SHOES &&
-      //   category !== CATEGORY.ELECTRONICS
-      //   ){
-      //     res.status(400)
-      //     throw new Error (" A 'category' do produto precisa ser um dos tipos validos")
-      //   }
-    
-        const unavailableProductId = product.find((p)=> p.id === id)
-        if(unavailableProductId){
-          res.status(400)
-          throw new Error(" O Id informado já consta em algum produto anteriormente cadastrado, por favor escolha outro Id.")
-        }
-    
-      await db.raw(`
-        INSERT INTO products (id, name, price, description, imageUrl)
-        VALUES ("${id}","${name}","${price}","${description}","${imageUrl}");
-      `)
+      
+      if(typeof description !== "string"){
+        res.status(400)
+        throw new Error("O 'description' do produto precisa ser do tipo string")
+      }
+      if(typeof imageUrl !== "string"){
+        res.status(400)
+        throw new Error("O 'imageUrl' do produto precisa ser do tipo string")
+      }
+
+      const [existingProductId] = await db.raw(`
+        SELECT * FROM products
+        WHERE id = "${id}"
+        `)
+      
+      if(existingProductId){
+        res.status(400);
+        throw new Error("'id' já cadastrado no banco de dados")
+      }
+
+      const newProduct : TProduct = {
+        id,
+        name,
+        price,
+        description,
+        imageUrl,
+      }
+
+
+      await db("products").insert(newProduct)
       res.status(201).send("Produto cadastrado com sucesso.");
     } catch (error) {
       console.log(error);
@@ -53,7 +63,7 @@ export const createProduct =  async (req: Request, res: Response) => {
         if (error instanceof Error) {
           res.send(error.message);
         } else {
-          res.send("Erro Inesperado :c.");
+          res.send("Erro Inesperado.");
         }
     }
     };

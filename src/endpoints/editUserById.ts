@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { users } from "../database";
+// import { users } from "../database";
 
 
 
@@ -12,11 +12,11 @@ export const editUserById = (req: Request, res: Response) => {
     const newEmail = req.body.email as string | undefined;
     const newPassword = req.body.password as string | undefined;
   
-    const userToEdit = users.find((user) => user.id === id);
-    if(!userToEdit){
-      res.status(400)
-      throw new Error("Usuario referente ao id informado não existe")
-    }
+    // const userToEdit = users.find((user) => user.id === id);
+    // if(!userToEdit){
+    //   res.status(400)
+    //   throw new Error("Usuario referente ao id informado não existe")
+    // }
   
       if(newId !== undefined){
         if(typeof newId !== "string"){
@@ -48,11 +48,11 @@ export const editUserById = (req: Request, res: Response) => {
       }
   
   
-    if(userToEdit){
-      userToEdit.id = newId || userToEdit.id;
-      userToEdit.email = newEmail || userToEdit.email
-      userToEdit.password = newPassword || userToEdit.password
-    }
+    // if(userToEdit){
+    //   userToEdit.id = newId || userToEdit.id;
+    //   userToEdit.email = newEmail || userToEdit.email
+    //   userToEdit.password = newPassword || userToEdit.password
+    // }
   
     res.status(200).send("Cadastro atualizado com sucesso")
       
