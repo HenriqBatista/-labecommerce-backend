@@ -42,7 +42,7 @@ app.get("/purchases/:id", getPurchaseById)
 // Endpoints metodo POST
 app.post("/users", createUser)
 app.post("/products", createProduct)
-app.post("/purchase", createPurchase)
+app.post("/purchases", createPurchase)
 
 // Endpoints metodo DELETE
 app.delete("/users/:id", deleteUserById)
