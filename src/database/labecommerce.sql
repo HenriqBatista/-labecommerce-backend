@@ -127,11 +127,11 @@ SELECT * FROM purchases;
 
 UPDATE purchases
 SET paid = 1
-WHERE id = "pu001";
+WHERE id = "pu005";
 
 UPDATE purchases
 SET delivered_at = DATETIME("now", "localtime")
-WHERE id = "pu001";
+WHERE id = "pu005";
 
 SELECT
 users.id AS userId,
@@ -173,6 +173,8 @@ SELECT products.id FROM products;
 
 
 SELECT * FROM purchases;
+SELECT * FROM purchases_products;
+
 SELECT * FROM products;
 
 SELECT  

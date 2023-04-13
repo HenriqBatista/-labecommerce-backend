@@ -4,7 +4,7 @@ import { db } from "../database/knex";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-      const result = await db.raw(`SELECT * FROM users;`)
+      const result = await db.raw(`SELECT "id","name","email","password", "created_at" as createdAt FROM users;`)
 
       if(!result){
         res.status(404);

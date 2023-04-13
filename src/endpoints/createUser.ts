@@ -71,7 +71,7 @@ export const createUser =  async (req: Request, res: Response) => {
       if (error instanceof Error) {
         res.send(error.message);
       } else {
-        res.send("Erro Inesperado :c.");
+        res.send("Erro Inesperado.");
       }
     }
   };
