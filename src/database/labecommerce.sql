@@ -158,7 +158,10 @@ CREATE TABLE purchases_products(
     product_id TEXT NOT NULL,
     quantity INTEGER NOT NULL,
     FOREIGN KEY (purchase_id) REFERENCES purchases(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+
+    FOREIGN KEY (product_id) REFERENCES products(id)ON DELETE CASCADE
+
+    
 );
 
 DROP TABLE purchases_products;
@@ -169,17 +172,18 @@ VALUES
         ("pu002","03",4),
         ("pu003","04",3);
 
+
+
 SELECT products.id FROM products;
 
-
 SELECT * FROM purchases;
-SELECT * FROM purchases_products;
 
 SELECT * FROM products;
 
+
 SELECT  
-        purchases_products.product_id as BuyId,
-        purchases_products.product_id as ProductId,
+        purchases_products.product_id as purchaseId,
+ases_products.product_id as ProductId,
         products.name as ProductName,
         products.price as productPrice,
         purchases_products.quantity as Quantity,
@@ -192,3 +196,6 @@ FROM purchases_products
 INNER JOIN purchases ON purchases.id = purchases_products.purchase_id
 INNER JOIN products ON products.id = purchases_products.product_id
 INNER JOIN users ON users.id = purchases.buyer_id;
+
+
+

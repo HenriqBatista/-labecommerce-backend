@@ -9,7 +9,6 @@ export const createPurchase = async (req: Request, res: Response) => {
     const userId = req.body.buyer_id as string;
     const productId = req.body.productId as string;
     const quantity = req.body.quantity as number
-    // const total_price = req.body.total_price as number;
     const purchaseId = req.body.id as string;
     const deliveredAt = req.body.deliveredAt as string | undefined;
   
@@ -52,12 +51,15 @@ export const createPurchase = async (req: Request, res: Response) => {
       WHERE id LIKE "${productId}"
     `)
 
+
     console.log(existingProductId)
 
     if(!existingProductId){
       res.status(400)
       throw new Error("Produto não encontrado")
     }
+
+
 
     const [product] = await db.raw(`
         SELECT price FROM products
@@ -89,6 +91,3 @@ export const createPurchase = async (req: Request, res: Response) => {
       }
     }
   };
-
-
-  

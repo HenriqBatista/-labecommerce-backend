@@ -27,4 +27,3 @@ export const getProductByName = async (req: Request, res: Response) => {
       }
     }
   };
-  

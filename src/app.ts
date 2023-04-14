@@ -15,6 +15,7 @@ import { createPurchase } from "./endpoints/createPurchase";
 // import endpoints delete
 import { deleteUserById } from "./endpoints/deleteUserById";
 import { deleteProductById } from "./endpoints/deleteProductById";
+import { deletePurchaseById } from "./endpoints/deletePurchaseById";
 // import endpoints put
 import { editUserById } from "./endpoints/editUserById";
 import { editProductById } from "./endpoints/editProductById";
@@ -46,8 +47,9 @@ app.post("/purchases", createPurchase)
 
 // Endpoints metodo DELETE
 app.delete("/users/:id", deleteUserById)
-app.delete("/product/:id", deleteProductById)
+app.delete("/products/:id", deleteProductById)
+app.delete("/purchases/:id", deletePurchaseById)
 
 // Endpoints metodo PUT
 app.put("/users/:id", editUserById)
-app.put("/product/:id", editProductById)
+app.put("/products/:id", editProductById)
