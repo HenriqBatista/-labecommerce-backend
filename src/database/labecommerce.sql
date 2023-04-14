@@ -1,4 +1,4 @@
--- Active: 1681391095007@@127.0.0.1@3306
+-- Active: 1680622042587@@127.0.0.1@3306
 
 
 -- criando tabela users
@@ -183,7 +183,7 @@ SELECT * FROM products;
 
 SELECT  
         purchases_products.product_id as purchaseId,
-ases_products.product_id as ProductId,
+        purchases_products.product_id as ProductId,
         products.name as ProductName,
         products.price as productPrice,
         purchases_products.quantity as Quantity,
