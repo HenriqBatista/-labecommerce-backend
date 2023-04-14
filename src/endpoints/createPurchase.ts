@@ -51,12 +51,15 @@ export const createPurchase = async (req: Request, res: Response) => {
       WHERE id LIKE "${productId}"
     `)
 
+
     console.log(existingProductId)
 
     if(!existingProductId){
       res.status(400)
       throw new Error("Produto não encontrado")
     }
+
+
 
     const [product] = await db.raw(`
         SELECT price FROM products

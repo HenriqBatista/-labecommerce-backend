@@ -1,4 +1,4 @@
--- Active: 1680622042587@@127.0.0.1@3306
+-- Active: 1681391095007@@127.0.0.1@3306
 
 
 -- criando tabela users
@@ -127,11 +127,11 @@ SELECT * FROM purchases;
 
 UPDATE purchases
 SET paid = 1
-WHERE id = "pu001";
+WHERE id = "pu005";
 
 UPDATE purchases
 SET delivered_at = DATETIME("now", "localtime")
-WHERE id = "pu001";
+WHERE id = "pu005";
 
 SELECT
 users.id AS userId,
@@ -158,7 +158,10 @@ CREATE TABLE purchases_products(
     product_id TEXT NOT NULL,
     quantity INTEGER NOT NULL,
     FOREIGN KEY (purchase_id) REFERENCES purchases(id) ON DELETE CASCADE,
+
     FOREIGN KEY (product_id) REFERENCES products(id)ON DELETE CASCADE
+
+    
 );
 
 DROP TABLE purchases_products;
@@ -169,19 +172,18 @@ VALUES
         ("pu002","03",4),
         ("pu003","04",3);
 
-INSERT INTO purchases_products
-VALUES("pu001","01",1);
 
 
 SELECT products.id FROM products;
 
 SELECT * FROM purchases;
+
 SELECT * FROM products;
 
 
 SELECT  
         purchases_products.product_id as purchaseId,
-        purchases_products.product_id as ProductId,
+ases_products.product_id as ProductId,
         products.name as ProductName,
         products.price as productPrice,
         purchases_products.quantity as Quantity,
@@ -194,4 +196,6 @@ FROM purchases_products
 INNER JOIN purchases ON purchases.id = purchases_products.purchase_id
 INNER JOIN products ON products.id = purchases_products.product_id
 INNER JOIN users ON users.id = purchases.buyer_id;
+
+
 
