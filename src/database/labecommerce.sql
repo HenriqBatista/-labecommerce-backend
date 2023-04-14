@@ -106,7 +106,7 @@ CREATE TABLE purchases(
     created_at TIMESTAMP DEFAULT (datetime('now', '-3 hours')),
     paid INTEGER NOT NULL DEFAULT 0,
     delivered_at TEXT,
-    FOREIGN KEY (buyer_id) REFERENCES users (id)
+    FOREIGN KEY (buyer_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
 INSERT INTO purchases (id, total_price,buyer_id)
@@ -157,8 +157,8 @@ CREATE TABLE purchases_products(
     purchase_id TEXT NOT NULL,
     product_id TEXT NOT NULL,
     quantity INTEGER NOT NULL,
-    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id)ON DELETE CASCADE
 );
 
 DROP TABLE purchases_products;
@@ -169,27 +169,29 @@ VALUES
         ("pu002","03",4),
         ("pu003","04",3);
 
-SELECT  
-        users.id,
-        users.email,
-        purchases.id AS purchaseId,
-        purchases.paid,
-        products.id as productId,
-        products.name AS productName,
-        products.description AS productDescription,
-        products.price AS price,
-        purchases_products.quantity,
-        purchases.total_price
-FROM purchases
-LEFT JOIN purchases_products
-ON purchases_products.product_id = purchases.id
-LEFT JOIN products
-ON purchases_products.product_id = products.id
-LEFT JOIN users
-ON purchases.buyer_id = users.id;
+INSERT INTO purchases_products
+VALUES("pu001","01",1);
+
 
 SELECT products.id FROM products;
 
-
 SELECT * FROM purchases;
 SELECT * FROM products;
+
+
+SELECT  
+        purchases_products.product_id as purchaseId,
+        purchases_products.product_id as ProductId,
+        products.name as ProductName,
+        products.price as productPrice,
+        purchases_products.quantity as Quantity,
+        purchases.total_price as TotalPrice,
+        CASE WHEN purchases.paid = 0 THEN 'not paid' ELSE 'paid' END AS "Payment Status",
+        purchases.delivered_at as deliveryDate,
+        users.id as userId,
+        users.name as userName
+FROM purchases_products
+INNER JOIN purchases ON purchases.id = purchases_products.purchase_id
+INNER JOIN products ON products.id = purchases_products.product_id
+INNER JOIN users ON users.id = purchases.buyer_id;
+

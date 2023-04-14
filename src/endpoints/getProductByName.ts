@@ -11,7 +11,7 @@ export const getProductByName = async (req: Request, res: Response) => {
       res.status(400)
       throw new Error("Erro. Digite um nome válido.")
     }
-    const result = await db.raw(`SELECT * FROM products WHERE name = "${q}";`)
+    const result = await db("products").where("name","like",`%${q}%`)
   
     res.status(200).send(result);
   
@@ -27,4 +27,3 @@ export const getProductByName = async (req: Request, res: Response) => {
       }
     }
   };
-  

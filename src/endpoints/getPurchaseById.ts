@@ -4,7 +4,7 @@ import { db } from "../database/knex";
 export const getPurchaseById = async (req: Request, res: Response) =>{
     try {
         const purchaseId = req.params.id
-        const [result] = await db("purchases").where({id: purchaseId})
+        const result = await db("purchases").where({id: purchaseId})
 
         if(result){
             const [purchase] = await db("users")
@@ -18,6 +18,8 @@ export const getPurchaseById = async (req: Request, res: Response) =>{
             )
             .innerJoin("purchases","purchases.buyer_id","=","users.id")
             .where("purchases.id","=", purchaseId)
+
+
             const listsOfProducts = await db("purchases_products").select(
                 "purchases_products.purchase_id as id",
                 "products.name as name",
